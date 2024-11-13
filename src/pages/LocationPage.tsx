@@ -103,7 +103,7 @@ const LocationPage: React.FC = () => {
         {/* Suggested Locations */}
         {suggestedLocations.length > 1 && (
           <h2 className="text-3xl font-bold mb-6 text-center text-blue-900 font-lora">
-            Un lieu spécifique à explorer ?
+            Wanna be more specific? Choose your location!
           </h2>
         )}
 
@@ -133,7 +133,7 @@ const LocationPage: React.FC = () => {
             onClick={() => handleLocationSelect(locationDescription)}
             className="bg-blue-700 text-white px-6 py-2 rounded-lg mt-10 hover:bg-blue-800 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 font-montserrat"
           >
-            Laissez-moi vague
+            I wanna remain vague 🤔
           </button>
         )}
       </div>

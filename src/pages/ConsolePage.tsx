@@ -514,7 +514,7 @@ export function ConsolePage() {
       <div className="content-top">
         <div className="content-title">
           <img src="/openai-logomark.svg" alt="Logo" />
-          <span>Realtime Conversation</span>
+          <span>Ask anything to your local Frenchy! 🇫🇷🥸🥖🥐🍷</span>
         </div>
       </div>
       <div className="content-main">
@@ -561,7 +561,7 @@ export function ConsolePage() {
                             (conversationItem.formatted.audio?.length
                               ? '(awaiting transcript)'
                               : conversationItem.formatted.text ||
-                              '(item sent)')}
+                                '(item sent)')}
                         </div>
                       )}
                     {!conversationItem.formatted.tool &&
@@ -581,7 +581,11 @@ export function ConsolePage() {
                   </div>
                 </div>
               ))}
-              <img src={imageUrl ?? undefined} alt="" className="generated-image" />
+              <img
+                src={imageUrl ?? undefined}
+                alt=""
+                className="generated-image"
+              />
             </div>
           </div>
           <div className="content-actions">
@@ -621,7 +625,9 @@ export function ConsolePage() {
               <div className="content-block-title">Map</div>
               <div className="content-block-body full">
                 {coords && (
-                  <div style={{ flex: 1, position: 'relative', height: '100%' }}>
+                  <div
+                    style={{ flex: 1, position: 'relative', height: '100%' }}
+                  >
                     <Map
                       center={[coords.latitude, coords.longitude]}
                       location={coords.location}
