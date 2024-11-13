@@ -20,7 +20,7 @@ const LocationSelector: React.FC<LocationSelectorProps> = ({ onLocationSelect })
           type="text"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
-          placeholder="Where in France do you want to travel?"
+          placeholder="What part of France do you want to discover?"
           className="flex-grow border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
         />
         <button 
