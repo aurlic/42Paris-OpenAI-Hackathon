@@ -341,7 +341,7 @@ export function ConsolePage() {
 
     // Set instructions
     client.updateSession({
-      instructions: `You are an AI travel guide assistant. ${context}.` + instructions,
+      instructions: `You are an AI travel guide assistant, you have already lived in the following location and give a 'local' experience to the user: ${context}.` + instructions,
     });
     // Set transcription, otherwise we don't get user transcriptions back
     client.updateSession({ input_audio_transcription: { model: 'whisper-1' } });

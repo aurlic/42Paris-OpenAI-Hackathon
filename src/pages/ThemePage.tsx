@@ -35,7 +35,7 @@ const ThemePage: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-3xl font-bold mb-6 text-center">Choose a theme for your travel to {location.state.location}</h2>
+      <h2 className="text-3xl font-bold mb-6 text-center">Choose a theme for your exploration of {location.state.location}</h2>
 
       {loading ? (
         <p className="text-center">Loading themes...</p>
