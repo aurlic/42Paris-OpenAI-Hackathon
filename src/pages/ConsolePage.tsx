@@ -452,7 +452,7 @@ export function ConsolePage() {
               size: "1024x1024",
             }),
           });
-    
+
           const result = await response.json();
           if (result.data && result.data[0] && result.data[0].url) {
             setImageUrl(result.data[0].url);
@@ -464,7 +464,7 @@ export function ConsolePage() {
         }
       }
     );
-    
+
     // handle realtime events from client + server for event logging
     client.on('error', (event: any) => console.error(event));
     client.on('conversation.interrupted', async () => {
@@ -581,7 +581,7 @@ export function ConsolePage() {
                   </div>
                 </div>
               ))}
-              <img src={imageUrl ?? undefined} alt="Image générée par DALL-E" className="generated-image" />
+              <img src={imageUrl ?? undefined} alt="" className="generated-image" />
             </div>
           </div>
           <div className="content-actions">
