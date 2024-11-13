@@ -17,21 +17,26 @@ const ThemePage: React.FC = () => {
   useEffect(() => {
     const fetchThemes = async () => {
       setLoading(true);
-      const suggestedThemes = await getSuggestedThemes([location.state.location]);
+      const suggestedThemes = await getSuggestedThemes([location.state.location], 8);
       setThemes(suggestedThemes || []);
       setLoading(false);
     };
     fetchThemes();
   }, [location.state.location]);
 
-  const handleThemeSelect = (theme: string) => {
-    navigate('/activities', { state: { location: location.state.location, theme } });
+
+  const handleThemeSelect = (theme: Theme) => {
+    navigate('/console', {
+      state: {
+        context: `${theme.name} in ${location.state.location}`
+      },
+    });
   };
 
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-3xl font-bold mb-6 text-center">Choose a theme for your travel to {location.state.location}</h2>
-      
+
       {loading ? (
         <p className="text-center">Loading themes...</p>
       ) : (
@@ -39,7 +44,7 @@ const ThemePage: React.FC = () => {
           {themes.map((theme, index) => (
             <div
               key={index}
-              onClick={() => handleThemeSelect(theme.name)}
+              onClick={() => handleThemeSelect(theme)}
               className="bg-blue-500 text-white rounded-lg p-6 text-center hover:bg-blue-600 transition-colors cursor-pointer"
             >
               <p>{theme.emoji}</p>

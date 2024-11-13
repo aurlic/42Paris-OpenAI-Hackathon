@@ -92,12 +92,12 @@ const LocationPage: React.FC = () => {
           </div>
         ))}
       </div>
-      <button
+      {suggestedLocations.length > 1 && <button
         onClick={() => handleLocationSelect(locationDescription)}
         className="bg-black text-white px-4 py-2 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 mx-auto block mt-10"
       >
         Keep it vague
-      </button>
+      </button>}
     </div>
   );
 };
