@@ -17,43 +17,65 @@ const ThemePage: React.FC = () => {
   useEffect(() => {
     const fetchThemes = async () => {
       setLoading(true);
-      const suggestedThemes = await getSuggestedThemes([location.state.location], 8);
+      const suggestedThemes = await getSuggestedThemes(
+        [location.state.location],
+        8
+      );
       setThemes(suggestedThemes || []);
       setLoading(false);
     };
     fetchThemes();
   }, [location.state.location]);
 
-
   const handleThemeSelect = (theme: Theme) => {
     navigate('/console', {
       state: {
-        context: `${theme.name} in ${location.state.location}`
+        context: `${theme.name} in ${location.state.location}`,
       },
     });
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-3xl font-bold mb-6 text-center">Choose a theme for your exploration of {location.state.location}</h2>
+    <div
+      className="relative min-h-screen flex flex-col items-center justify-center"
+      style={{
+        backgroundImage: `url('/france.jpg')`, // Adjusted path for background image
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      {/* Light overlay for readability */}
+      <div className="absolute inset-0 bg-white opacity-70"></div>
 
-      {loading ? (
-        <p className="text-center">Loading themes...</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {themes.map((theme, index) => (
-            <div
-              key={index}
-              onClick={() => handleThemeSelect(theme)}
-              className="bg-blue-500 text-white rounded-lg p-6 text-center hover:bg-blue-600 transition-colors cursor-pointer"
-            >
-              <p>{theme.emoji}</p>
-              <h2 className="text-xl font-semibold">{theme.name}</h2>
-              <p className="text-sm mt-2">{theme.description}</p>
-            </div>
-          ))}
-        </div>
-      )}
+      {/* Main Content */}
+      <div className="relative z-10 p-10 max-w-4xl w-full bg-white bg-opacity-90 backdrop-blur-md rounded-lg shadow-xl text-center">
+        <h2 className="text-5xl font-lora text-blue-900 mb-8">
+          Choose a theme for your exploration of {location.state.location}
+        </h2>
+
+        {loading ? (
+          <p className="text-center text-gray-700 font-montserrat">
+            Loading themes...
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full px-4">
+            {themes.map((theme, index) => (
+              <div
+                key={index}
+                onClick={() => handleThemeSelect(theme)}
+                className="bg-white text-gray-800 rounded-lg shadow-lg p-6 text-center hover:shadow-xl transition-shadow cursor-pointer font-lora"
+              >
+                <p className="text-4xl">{theme.emoji}</p>
+                <h2 className="text-xl font-semibold text-blue-800 mt-2">
+                  {theme.name}
+                </h2>
+                <p className="text-sm mt-2">{theme.description}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
