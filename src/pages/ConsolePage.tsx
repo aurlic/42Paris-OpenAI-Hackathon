@@ -129,6 +129,7 @@ export function ConsolePage() {
     longitude: 1.888334,
   });
   const [marker, setMarker] = useState<Coordinates | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   /**
    * Utility for formatting the timing of logs
@@ -193,8 +194,8 @@ export function ConsolePage() {
     setItems([]);
     setMemoryKv({});
     setCoords({
-      latitude: 46.603354,
-      longitude: 1.888334,
+      latitude: 37.775593,
+      longitude: -122.418137,
     });
     setMarker(null);
 
@@ -380,7 +381,7 @@ export function ConsolePage() {
       {
         name: 'get_weather',
         description:
-          'Retrieves the weather for a given latitude, longitude coordinate pair. Specify a label for the location.',
+          'Retrieves the weather for a given latitude, longitude coordinate pair. Specify a label for the location. Dont generate image after',
         parameters: {
           type: 'object',
           properties: {
@@ -420,6 +421,50 @@ export function ConsolePage() {
       }
     );
 
+    client.addTool(
+      {
+        name: 'generate_image',
+        description: 'Generates an image for a specific location using DALL-E.',
+        parameters: {
+          type: 'object',
+          properties: {
+            location: {
+              type: 'string',
+              description: 'Description of the location for the image',
+            },
+          },
+          required: ['location'],
+        },
+      },
+      async ({ location }: { [key: string]: any }) => {
+        try {
+          const prompt = `An image representing ${location} in a very realistic style.`;
+          const response = await fetch("https://api.openai.com/v1/images/generations", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+            },
+            body: JSON.stringify({
+              model: "dall-e-3",
+              prompt: prompt,
+              n: 1,
+              size: "1024x1024",
+            }),
+          });
+    
+          const result = await response.json();
+          if (result.data && result.data[0] && result.data[0].url) {
+            setImageUrl(result.data[0].url);
+          } else {
+            console.error("Error", result);
+          }
+        } catch (error) {
+          console.error('Error', error);
+        }
+      }
+    );
+    
     // handle realtime events from client + server for event logging
     client.on('error', (event: any) => console.error(event));
     client.on('conversation.interrupted', async () => {
@@ -452,6 +497,14 @@ export function ConsolePage() {
       client.reset();
     };
   }, []);
+
+  useEffect(() => {
+    if (imageUrl) {
+      console.log("Image URL:", imageUrl); // Vérification de l'URL de l'image
+    } else {
+      console.log("imageUrl is null or undefined");
+    }
+  }, [imageUrl]);
 
   /**
    * Render the application
@@ -528,6 +581,7 @@ export function ConsolePage() {
                   </div>
                 </div>
               ))}
+              <img src={imageUrl ?? undefined} alt="Image générée par DALL-E" className="generated-image" />
             </div>
           </div>
           <div className="content-actions">
