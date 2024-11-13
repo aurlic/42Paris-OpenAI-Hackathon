@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState, useEffect, useRef
+
+} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getSuggestedThemes } from '../services/openaiService';
 
@@ -13,16 +16,23 @@ const ThemePage: React.FC = () => {
   const navigate = useNavigate();
   const [themes, setThemes] = useState<Array<Theme>>([]);
   const [loading, setLoading] = useState(true);
+  const hasFetchedThemes = useRef(false);
+
+
+  const fetchThemes = async () => {
+    setLoading(true);
+    const suggestedThemes = await getSuggestedThemes([location.state.location], 8);
+    setThemes(suggestedThemes || []);
+    setLoading(false);
+  };
 
   useEffect(() => {
-    const fetchThemes = async () => {
-      setLoading(true);
-      const suggestedThemes = await getSuggestedThemes([location.state.location], 8);
-      setThemes(suggestedThemes || []);
-      setLoading(false);
-    };
-    fetchThemes();
-  }, [location.state.location]);
+    if (!hasFetchedThemes.current) {
+      console.log('useEffect called');
+      fetchThemes();
+      hasFetchedThemes.current = true;
+    }
+  }, []);
 
 
   const handleThemeSelect = (theme: Theme) => {

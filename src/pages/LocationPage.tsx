@@ -65,6 +65,7 @@ const LocationPage: React.FC = () => {
         </div>
       </form>
 
+      <h3 className="text-2xl font-bold mb-6 text-center">Feeling adventurous?</h3>
       <button
         onClick={handleSurprise}
         disabled={surpriseLoading}
